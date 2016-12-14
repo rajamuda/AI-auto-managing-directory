@@ -1,0 +1,11 @@
+.a
+.ar
+.cpio
+.shar
+.iso
+.lbr
+.mar
+.tar
+.zip
+.rar
+.gz
