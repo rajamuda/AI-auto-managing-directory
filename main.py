@@ -31,7 +31,7 @@ notInTheList = [];
 os.system('cls')
 folder = os.getcwd()
 
-print("Folder: "+folder+"\n")
+print("\nCurrent directory: "+folder)
 ch = input("Change directory?\n(Y/N): ")
 
 while(1):
@@ -43,7 +43,7 @@ while(1):
 			folder = input("Type the address (ex: C:\\Users\\username\\Documents): ")
 		
 		os.system('cls')
-		print("Folder: "+folder+"\n")
+		print("\nCurrent directory: "+folder)
 		ch = input("Change directory again?\n(Y/N): ")
 	else:
 		break
