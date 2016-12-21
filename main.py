@@ -1,11 +1,11 @@
-import os, shutil
+import os, shutil, time, sys
 
-mu = open("kb\\audio.txt", "r")
-vi = open("kb\\video.txt", "r")
-do = open("kb\\doc.txt", "r")
-co = open("kb\\compressed.txt", "r")
-pi = open("kb\\picture.txt", "r")
-pr = open("kb\\program.txt", "r")
+mu = open("kb/audio.txt", "r")
+vi = open("kb/video.txt", "r")
+do = open("kb/doc.txt", "r")
+co = open("kb/compressed.txt", "r")
+pi = open("kb/picture.txt", "r")
+pr = open("kb/program.txt", "r")
 
 musicExt = mu.read().splitlines()
 videoExt = vi.read().splitlines()
@@ -14,6 +14,7 @@ compExt = co.read().splitlines()
 picExt = pi.read().splitlines()
 progExt = pr.read().splitlines()
 
+platform = sys.platform
 
 user = os.getlogin()
 
@@ -26,6 +27,7 @@ defaultFolder = {'Music': 'C:/Users/'+user+'/Downloads/Music',
 				 }
 
 notInTheList = [];
+exeptionExt = ['.ini', '.db'];
 
 
 os.system('cls')
@@ -36,11 +38,11 @@ ch = input("Change directory?\n(Y/N): ")
 
 while(1):
 	if(ch == 'Y' or ch == 'y' ):
-		folder = input("Type the address (ex: C:\\Users\\username\\Documents): ")
+		folder = input("Type the address (ex: C:\\Users\\<username>\\Documents): ")
 
 		while(not os.path.exists(folder)):
 			print("Error! No such folder\n")
-			folder = input("Type the address (ex: C:\\Users\\username\\Documents): ")
+			folder = input("Type the address (ex: C:\\Users\\<username>\\Documents): ")
 		
 		os.system('cls')
 		print("\nCurrent directory: "+folder)
@@ -48,6 +50,7 @@ while(1):
 	else:
 		break
 
+start_time = time.time()
 
 files = (file for file in os.listdir(folder) if os.path.isfile(os.path.join(folder, file)))
 
@@ -62,7 +65,7 @@ for file in files:
 		except IOError as e:
 			print("Error: "+e.strerror)
 		else:
-			print(">> \""+file+"\" succesfully removed into Music folder!")
+			print(">> \""+file+"\" succesfully moved into Music directory!")
 
 	elif any(ext == vext for vext in videoExt):
 		if(not os.path.exists(defaultFolder['Video'])):
@@ -72,7 +75,7 @@ for file in files:
 		except IOError as e:
 			print("Error: "+e.strerror)
 		else:
-			print(">> \""+file+"\" succesfully removed into Video folder!")
+			print(">> \""+file+"\" succesfully moved into Video directory!")
 
 	elif any(ext == dext for dext in docExt):
 		if(not os.path.exists(defaultFolder['Documents'])):
@@ -82,7 +85,7 @@ for file in files:
 		except IOError as e:
 			print("Error: "+e.strerror)
 		else:
-			print(">> \""+file+"\" succesfully removed into Documents folder!")
+			print(">> \""+file+"\" succesfully moved into Documents directory!")
 
 	elif any(ext == cext for cext in compExt):
 		if(not os.path.exists(defaultFolder['Compressed'])):
@@ -92,7 +95,7 @@ for file in files:
 		except IOError as e:
 			print("Error: "+e.strerror)
 		else:
-			print(">> \""+file+"\" succesfully removed into Compressed folder!")
+			print(">> \""+file+"\" succesfully moved into Compressed directory!")
 
 	elif any(ext == pext for pext in progExt):
 		if(not os.path.exists(defaultFolder['Programs'])):
@@ -102,7 +105,7 @@ for file in files:
 		except IOError as e:
 			print("Error: "+e.strerror)
 		else:
-			print(">> \""+file+"\" succesfully removed!")
+			print(">> \""+file+"\" succesfully moved into Programs directory!")
 
 	elif any(ext == gext for gext in picExt):
 		if(not os.path.exists(defaultFolder['Pictures'])):
@@ -112,19 +115,22 @@ for file in files:
 		except IOError as e:
 			print("Error: "+e.strerror)
 		else:
-			print(">> \""+file+"\" succesfully removed Picture folder!")
+			print(">> \""+file+"\" succesfully moved into Picture directory!")
 
 	else:
-		if(ext not in notInTheList):
+		if(ext not in notInTheList and ext not in exeptionExt):
 			notInTheList.append(ext)
 
+end_time = time.time()
 
-mu = open("kb\\audio.txt", "a")
-vi = open("kb\\video.txt", "a")
-do = open("kb\\doc.txt", "a")
-co = open("kb\\compressed.txt", "a")
-pi = open("kb\\picture.txt", "a")
-pr = open("kb\\program.txt", "a")
+print("\nTime executed: %.2f seconds\n" % (end_time-start_time))
+
+mu = open("kb/audio.txt", "a")
+vi = open("kb/video.txt", "a")
+do = open("kb/doc.txt", "a")
+co = open("kb/compressed.txt", "a")
+pi = open("kb/picture.txt", "a")
+pr = open("kb/program.txt", "a")
 
 if(notInTheList):
 	for ext in notInTheList:
